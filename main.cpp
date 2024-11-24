@@ -2,20 +2,20 @@
 #include <cstdlib>
 #include <ctime>
 
-const int width = 300;      // ºô®æªº¼e«×
-const int height = 300;     // ºô®æªº°ª«×
-float grid[width][height];  // ¼ÒÀÀ¿@«×ªººô®æ
-float diffusionRate = 0.27f; // ÂX´²³t²v
+const int width = 300;      // ç¶²æ ¼çš„å¯¬åº¦
+const int height = 300;     // ç¶²æ ¼çš„é«˜åº¦
+float grid[width][height];  // æ¨¡æ“¬æ¿ƒåº¦çš„ç¶²æ ¼
+float diffusionRate = 0.27f; // æ“´æ•£é€Ÿç‡
 
 void initializeGrid() {
-    // ªì©l¤Æ©Ò¦³®æ¤l¬° 0
+    // åˆå§‹åŒ–æ‰€æœ‰æ ¼å­ç‚º 0
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
             grid[x][y] = 0.0f;
         }
     }
 
-    // ³]©w¤¤¶¡ 5x5 °Ï°ìªº¿@«×¬°³Ì¤j­È 100
+    // è¨­å®šä¸­é–“ 5x5 å€åŸŸçš„æ¿ƒåº¦ç‚ºæœ€å¤§å€¼ 100
     int centerX = width / 2;
     int centerY = height / 2;
     for (int x = centerX - 2; x <= centerX + 2; ++x) {
@@ -28,7 +28,7 @@ void initializeGrid() {
 void updateDiffusion() {
     float newGrid[width][height];
 
-    // ÂX´²­pºâ
+    // æ“´æ•£è¨ˆç®—
     for (int x = 1; x < width - 1; ++x) {
         for (int y = 1; y < height - 1; ++y) {
             newGrid[x][y] = grid[x][y] + diffusionRate * (
@@ -37,10 +37,10 @@ void updateDiffusion() {
                 4 * grid[x][y]
                 );
             if (grid[x][y] < 0.0f) {
-                grid[x][y] = 0.0f;  // ¨¾¤î­t¼Æ
+                grid[x][y] = 0.0f;  // é˜²æ­¢è² æ•¸
             }
             if (grid[x][y] > 100.0f) {
-                grid[x][y] = 100.0f;  // ¨¾¤î­t¼Æ
+                grid[x][y] = 100.0f;  // é˜²æ­¢è² æ•¸
             }
 
 
@@ -48,14 +48,14 @@ void updateDiffusion() {
 
     }
 
-    // ±N·sªººô®æ¼Æ¾Ú½Æ»s¦^­ì©lºô®æ
+    // å°‡æ–°çš„ç¶²æ ¼æ•¸æ“šè¤‡è£½å›åŸå§‹ç¶²æ ¼
     for (int x = 1; x < width - 1; ++x) {
         for (int y = 1; y < height - 1; ++y) {
             grid[x][y] = newGrid[x][y];
         }
     }
 
-    // ½T«O¤¤¶¡ªº 5x5 °Ï°ì«O«ù³Ì¤j¿@«×
+    // ç¢ºä¿ä¸­é–“çš„ 5x5 å€åŸŸä¿æŒæœ€å¤§æ¿ƒåº¦
     int centerX = width / 2;
     int centerY = height / 2;
     for (int x = centerX - 2; x <= centerX + 2; ++x) {
@@ -64,7 +64,7 @@ void updateDiffusion() {
         }
     }
 
-    glutPostRedisplay();  // ³qª¾ OpenGL ­«·sÃ¸»sµøµ¡
+    glutPostRedisplay();  // é€šçŸ¥ OpenGL é‡æ–°ç¹ªè£½è¦–çª—
 }
 
 
@@ -75,7 +75,7 @@ void display() {
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
             float value = grid[x][y] / 100.0f;
-            // ±j¤ÆÃC¦â¹ï¤ñ«×
+            // å¼·åŒ–é¡è‰²å°æ¯”åº¦
             glColor3f(value * value, value, 1.0f - value * value);
             glVertex2f((x / (float)width) * 2 - 1, (y / (float)height) * 2 - 1);
         }
